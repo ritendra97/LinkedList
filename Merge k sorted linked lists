@@ -1,0 +1,84 @@
+//Merge k sorted linked lists 
+import java.util.*;
+class Node
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+	public Integer getvalue()
+	{
+		return data;
+	}
+}
+public class LinkedList 
+{
+	static PriorityQueue<Node> pq = new PriorityQueue<>(new Comparator<Node>() {
+		public int compare(Node a,Node b)
+		{
+			return a.data - b.data;
+		}
+	});
+	static Node newhead =null;
+	static Node last=null;
+	static Node head;
+	public static void push(int data)
+    {
+	     Node new_node=new Node(data);
+	     new_node.data=data;
+	     new_node.next=head;
+	     head=new_node;
+    }
+	public static Node mergeKSortedLists(Node head, int k)
+	{
+	    for (int i = 0; head != null && i <=k; i++) 
+	    {  
+		     pq.add(head); 
+		     head = head.next; 
+		}
+	    while(!pq.isEmpty())
+	    {
+	    	Node top = pq.peek();
+	    	pq.remove();
+	    	if(newhead==null)
+	    	{
+	    		newhead=top;
+	    		last=top;
+	    	}
+	    	else
+	    	{
+	    		last.next=top;
+	    		last=top;
+	    	}
+	    	if(head!=null)
+	    	{
+	    		pq.add(head);  
+	            head = head.next; 
+	    	}
+	    	last.next=null;
+	    }
+	    return newhead;
+	}
+	static void print(Node node)
+	{
+		while(node!=null)
+		{
+			System.out.println(node.data);
+			node=node.next;
+		}
+	}
+	public static void main(String[] args) 
+	{
+		push(8);
+		push(56);
+		push(12);
+		push(2);
+		push(6);
+		push(3);
+		Node new_head=mergeKSortedLists(head,2);
+		print(new_head); 
+	}
+}
