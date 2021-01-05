@@ -1,0 +1,56 @@
+//Reverse a linked list
+import java.util.*;
+class Node
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+}
+public class LinkedList 
+{
+	static Node head;
+	static void push(int data)
+    {
+        Node new_node= new Node(data);
+        new_node.data=data;
+        new_node.next=head;
+        head=new_node;
+    }
+	static void reverse()
+	{
+		Node next=head;
+		Node prv=null;
+		Node curr=head;
+		while(curr!=null)
+		{
+			next=curr.next;
+			curr.next=prv;
+			prv=curr;
+			curr=next;
+		}
+		head=prv;
+	}
+	static void print()
+	{
+		Node temp=head;
+		while(temp!=null)
+		{
+			System.out.print(temp.data+" ");
+			temp=temp.next;
+		}
+	}
+	public static void main(String[] args) 
+	{
+		push(5);
+		push(4);
+		push(3);
+		push(2);
+		push(1);
+		reverse();
+		print();
+	}
+}
