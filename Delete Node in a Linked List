@@ -1,0 +1,57 @@
+//Delete Node in a Linked List
+class Node
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+}
+public class LinkedList 
+{
+	static Node head;
+	static void push(int data)
+    {
+        Node new_node= new Node(data);
+        new_node.data=data;
+        new_node.next=head;
+        head=new_node;
+    }
+	static void deleteNode(int key) 
+    { 
+		Node target=head;
+		Node prv=head;
+		if(key==1)
+		{
+			head=head.next;
+		}
+		while(key>1)
+		{
+			prv=target;
+			target=target.next;
+			key--;
+		}
+		prv.next=target.next;
+    }
+	static void print()
+	{
+		Node temp=head;
+		while(temp!=null)
+		{
+			System.out.print(temp.data+" ");
+			temp=temp.next;
+		}
+	}
+	public static void main(String[] args) 
+	{
+		push(5);
+		push(4);
+		push(3);
+		push(2);
+		push(1);
+		deleteNode(5);
+		print();
+	}
+}
