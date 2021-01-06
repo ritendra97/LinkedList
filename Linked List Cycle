@@ -1,0 +1,39 @@
+//Linked List Cycle
+import java.util.*;
+class Node
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+}
+public class LinkedList 
+{
+	static boolean detectLoop(Node node)
+	{
+		Node prv = node;
+		Node next =node;
+		while(prv!=null && next!=null && next.next!=null)
+		{
+			if(prv.data == next.data)
+			{
+				return true;
+			}
+			prv=prv.next;
+			next = next.next.next;
+		}
+		return false;
+	}
+	public static void main(String[] args) 
+	{
+		Node head = new Node(20);
+		head.next = new Node(4);
+		head.next.next = new Node(15);
+		head.next.next.next= new Node(10);
+		head.next.next.next.next = head;
+		System.out.println(detectLoop(head));
+	}
+}
