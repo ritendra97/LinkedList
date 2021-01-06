@@ -1,0 +1,98 @@
+//Given a singly linked list, group all odd nodes together followed by the even nodes. Please note here we are talking about 
+//the node number and not the value in the nodes.
+import java.util.*;
+class Node
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+}
+public class LinkedList 
+{
+	static Node head;
+	public static Node oddEvenList(Node head) 
+    {
+		Node temp =head;
+        Node prv1=null;
+        Node prv2=null;
+        Node temp1=null;
+        Node temp2=null;
+        int len=1;
+        while(temp!=null)
+        {
+        	if(len%2!=0)
+        	{
+        		if(prv1==null)
+        		{
+        			prv1=temp;
+        			temp1=prv1;
+        		}
+        		else
+        		{
+        			temp1.next=temp;
+        			temp1=temp1.next;
+        		}
+        	}
+        	else
+        	{
+        		if(prv2==null)
+        		{
+        			prv2=temp;
+        			temp2=prv2;
+        		}
+        		else
+        		{
+        			temp2.next=temp;
+        			temp2=temp2.next;
+        		}
+        	}
+        	temp=temp.next;
+        	len++;
+        }
+        temp1.next=prv2;
+        temp2.next=null;
+        head=prv1;
+        return head;
+    }
+	static void printList(Node ptr)
+    {
+        while (ptr != null) {
+            System.out.print(ptr.data + "->");
+            ptr = ptr.next;
+        }
+        System.out.println("NULL");
+    }
+	public static void main(String[] args) 
+	{
+		Node head = new Node(2);  
+	    head.next = new Node(2);  
+	    head.next.next = new Node(3);  
+	    head.next.next.next = new Node(4);  
+	    head.next.next.next.next = new Node(5); 
+	    Node ans=oddEvenList(head);
+	    printList(ans);
+	}
+}
+// Another method
+public class Solution {
+    public ListNode oddEvenList(ListNode head) {
+        if (head == null) 
+            return null;
+        ListNode odd = head;
+        ListNode even = head.next;
+        ListNode second = even;
+        while (even != null && even.next != null) {
+            odd.next = even.next;
+            odd = odd.next;
+            
+            even.next = odd.next;
+            even = even.next;
+        }
+        odd.next = second;
+        return head;
+    }
+}
