@@ -1,0 +1,105 @@
+//Write a function to get the intersection point of two Linked Lists
+import java.util.*;
+class Node
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+}
+public class LinkedList 
+{
+	public static int  getIntersectionNode(Node headA, Node headB)
+    {
+		int lenA=0, lenB=0;
+        Node dummyA=headA,dummyB=headB;
+        
+        while(dummyA!=null){
+            lenA++;
+            dummyA=dummyA.next;
+        }
+        while(dummyB!=null){
+            lenB++;
+            dummyB=dummyB.next;
+        }
+        int diff=0;
+        if(lenA>lenB){
+            diff=lenA-lenB;
+        }else{
+            diff=lenB-lenA;
+        }
+        while(diff!=0){
+            headA=headA.next;
+            diff--;
+        }
+        
+        while(headA!=headB){
+            headA=headA.next;
+            headB=headB.next;
+        }
+        
+        return headA.data;
+    }
+	public static void main(String[] args) 
+	{
+		Node head1 = new Node(3);
+		head1.next = new Node(6);
+		head1.next.next = new Node(9);
+		head1.next.next.next = new Node(15);
+		head1.next.next.next.next = new Node(30);
+		
+		Node head2 = new Node(10);
+		head2.next = new Node(15);
+		head2.next.next = new Node(30);
+		System.out.print(getIntersectionNode(head1, head2));
+	}
+}
+// Time complexity of above code is O(m+n) AND Space complexity is O(1)
+import java.util.*;
+class Node
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+}
+public class LinkedList 
+{
+	public static int  getIntersectionNode(Node headA, Node headB)
+    {
+		HashSet<Node> ans = new HashSet<>();
+		while(headA!=null)
+		{
+			ans.add(headA);
+			headA=headA.next;
+		}
+		while(headB!=null)
+		{
+			if(ans.contains(headB))
+				return headB.data;
+			headB=headB.next;
+		}
+		return -1;
+    }
+	public static void main(String[] args) 
+	{
+		Node head1 = new Node(3);
+		head1.next = new Node(6);
+		head1.next.next = new Node(9);
+		head1.next.next.next = new Node(15);
+		head1.next.next.next.next = new Node(30);
+		
+		Node head2 = new Node(10);
+		head2.next = new Node(15);
+		head2.next.next = new Node(30);
+		head2.next.next.next = head1.next.next.next;
+		System.out.print(getIntersectionNode(head1, head2));
+	}
+}
+This is O(n) Complexity an and Space Complexity is O(n);
