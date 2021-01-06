@@ -1,0 +1,160 @@
+//Palindrome Linked List
+// This is not efficient solution It has O(n) space complexity
+import java.util.*;
+class Node
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+}
+public class LinkedList 
+{
+	static Node head;
+	static void push(int data)
+	{
+		Stack<Node> st = new Stack<Node>();
+		Node new_node = new Node(data);
+		new_node.data=data;
+		new_node.next = head;
+		head =new_node;
+	}
+	static boolean isPalindrome(Node head)
+	{
+		Stack<Node> st = new Stack<Node>();
+		Node temp = head;
+		while(temp!=null)
+		{
+			st.push(temp);
+			temp=temp.next;
+		}
+		while(head!=null &&!st.isEmpty())
+		{
+			Node ans = st.pop();
+			System.out.println(ans.data+" "+head.data);
+			if(ans.data!=head.data)
+				return false;
+			head=head.next;
+		}
+		return true;
+	}
+	public static void main(String[] args) 
+	{
+		push(1);
+		push(2);
+		push(3);
+		push(4);
+		push(3);
+		push(2);
+		push(1);
+		System.out.println(isPalindrome(head));
+	}
+}
+//Try to solve this is O(1) Complexity
+import java.util.*;
+class Node
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+}
+public class LinkedList 
+{
+	static Node head;
+	static Node second_half;
+	static void push(int data)
+	{
+		Node new_node = new Node(data);
+		new_node.data=data;
+		new_node.next = head;
+		head =new_node;
+	}
+	 static void reverse()
+	    {
+	        Node prev = null;
+	        Node current = second_half;
+	        Node next;
+	        while (current != null) {
+	            next = current.next;
+	            current.next = prev;
+	            prev = current;
+	            current = next;
+	        }
+	        second_half = prev;
+	    }
+	static boolean comparelist(Node head1, Node head2)
+	{
+		Node temp1 = head1;
+        Node temp2 = head2;
+        while (temp1 != null && temp2 != null) {
+            if (temp1.data == temp2.data) {
+                temp1 = temp1.next;
+                temp2 = temp2.next;
+            }
+            else
+                return false;
+        }
+         if (temp1 == null && temp2 == null)
+            return true;
+        return false;
+	}
+	static boolean isPalindrome(Node head)
+	{
+		Node fast_ptr=head;
+		Node slow_ptr=head;
+		Node slow_ptr_prv=null;
+		Node middle=null;
+		while(fast_ptr!=null && fast_ptr.next!=null)
+		{
+			fast_ptr = fast_ptr.next.next;
+			slow_ptr_prv = slow_ptr;
+			slow_ptr = slow_ptr.next;
+		}
+		if(fast_ptr!=null)
+		{
+			middle=slow_ptr;
+			slow_ptr = slow_ptr.next;
+		}
+		second_half= slow_ptr;
+		slow_ptr_prv.next=null;
+		reverse();
+		boolean res=comparelist(head,second_half);
+		reverse();
+		if(middle!=null)
+		{
+			slow_ptr_prv.next=middle;
+			middle.next=second_half;
+		}
+		else
+		{
+			slow_ptr_prv.next=second_half;
+		}
+		return res;
+	}
+	static void printList(Node ptr)
+    {
+        while (ptr != null) {
+            System.out.print(ptr.data + "->");
+            ptr = ptr.next;
+        }
+        System.out.println("NULL");
+    }
+	public static void main(String[] args) 
+	{
+		push(1);
+		push(2);
+		push(3);
+		push(4);
+		push(3);
+		push(2);
+		push(1);
+		System.out.println(isPalindrome(head));
+	}
+}
