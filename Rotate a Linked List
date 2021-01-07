@@ -34,7 +34,7 @@ public class LinkedList
 		while(i<k-1)
 		{
 			temp=temp.next;
-			i--;
+			i++;
 		}
 		head=temp.next;
 		temp.next=null;
