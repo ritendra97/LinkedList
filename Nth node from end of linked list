@@ -1,0 +1,66 @@
+//Nth node from end of linked list
+import java.util.*;
+class Node 
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+	Node()
+	{}
+}
+public class LinkedList 
+{
+	static Node head;
+	static void push(int data)
+	{
+		Node new_node = new Node();
+		new_node.data= data;
+		new_node.next=head;
+		head=new_node;
+	}
+	static int getNthFromLast(Node head, int n)
+    {
+		int len =1;
+		Node temp=head;
+		while(temp.next!=null)
+		{
+			temp=temp.next;
+			len++;
+		}
+		int k=len-n+1;
+		while(k>1)
+		{
+			head=head.next;
+			k--;
+		}
+		if(len>n)
+			return -1;
+		return head.data;
+    }
+	static void print(Node head)
+	{
+		Node temp=head;
+		while(temp!=null)
+		{
+			System.out.print(temp.data+" ");
+			temp=temp.next;
+		}
+	}
+	public static void main(String[] args) 
+	{
+		push(9);
+		push(8);
+		push(7);
+		push(6);
+		push(5);
+		push(4);
+		push(3);
+		push(2);
+		push(1);
+		System.out.print(getNthFromLast(head,2));
+	}
+}
