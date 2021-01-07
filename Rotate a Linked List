@@ -1,0 +1,66 @@
+//Rotate a Linked List
+class Node 
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+	Node()
+	{}
+}
+public class LinkedList 
+{
+	static Node head;
+	static void push(int data)
+	{
+		Node new_node = new Node();
+		new_node.data= data;
+		new_node.next=head;
+		head=new_node;
+	}
+	static void rotate(int k)
+    {
+		Node temp=head;
+		while(temp.next!=null)
+		{
+			temp=temp.next;
+		}
+		temp.next=head;
+		temp=head;
+		int i=0;
+		while(i<k-1)
+		{
+			temp=temp.next;
+			i--;
+		}
+		head=temp.next;
+		temp.next=null;
+    }
+	static void print(Node head)
+	{
+		Node temp=head;
+		while(temp!=null)
+		{
+			System.out.print(temp.data+" ");
+			temp=temp.next;
+		}
+	}
+	public static void main(String[] args) 
+	{
+		push(60);
+		push(50);
+		push(40);
+		push(30);
+		push(20);
+		push(10);
+		System.out.print("Given linked list \n");
+	    print(head);
+	    rotate( 4);
+	 
+	    System.out.print("\nRotated Linked list \n");
+	    print(head);
+	}
+}
