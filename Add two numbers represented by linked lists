@@ -1,4 +1,3 @@
-//Add two numbers represented by linked lists
 import java.util.*;
 class Node 
 {
@@ -14,30 +13,18 @@ class Node
 }
 public class LinkedList 
 {
-	static void reverse(Node head)
-	{
-		Node prv=null;
-		Node curr=head;
-		Node next=null;
-		while(curr!=null)
-		{
-			next=curr.next;
-			curr.next=prv;
-			prv=curr;
-			curr=next;
-		}
-		head=prv;
-	}
-	
 	static Node addTwoLists(Node first, Node second)
     {
-		Stack<Node> st1 = new Stack<Node>();
-		Stack<Node> st2 = new Stack<Node>();
-		while(first!=null && second!=null)
+		Stack<Integer> st1 = new Stack<>();
+		Stack<Integer> st2 = new Stack<>();
+		while(first!=null)
 		{
-			st1.push(first);
-			st2.push(second);
+			st1.push(first.data);
 			first=first.next;
+		}
+		while(second!=null)
+		{
+			st2.push(second.data);
 			second=second.next;
 		}
 		Node res=null;
@@ -45,11 +32,20 @@ public class LinkedList
 		int carry=0;
 		int sum=0;
 		Node temp=null;
-		while(!st1.isEmpty() && !st2.isEmpty())
+		while(!st1.isEmpty() || !st2.isEmpty())
 		{
-			Node x = st1.pop();
-			Node y = st2.pop();
-			sum=carry+(x.data)+(y.data);
+			int a=0;
+			int b=0;
+			if (!st1.isEmpty()) 
+	        {
+	            a = st1.pop();
+	        }
+	 
+	        if (!st2.isEmpty()) 
+	        {
+	           b = st2.pop();
+	        }
+			sum=carry+a+b;
 			carry = sum/10;
 			sum=sum%10;
 			temp=new Node(sum);
@@ -63,7 +59,7 @@ public class LinkedList
 				res=temp;
 			}
 		}
-		if(carry>0)
+		if(carry!=0)
 		{
 			temp=new Node(carry);
 			temp.next=res;
@@ -85,13 +81,15 @@ public class LinkedList
 		Node head1= new Node(5);
 		head1.next =new Node(6);
 		head1.next.next = new Node(3);
+		head1.next.next.next = new Node(9);
 		
 		Node head2= new Node(8);
 		head2.next =new Node(4);
 		head2.next.next = new Node(2);
+		head2.next.next.next = new Node(8);
+		head2.next.next.next.next = new Node(6);
+		
 		Node ans = addTwoLists(head1,head2);
 		print(ans);
 	}
 }
-//This is efficient solution Space Complexity O(1)
- 
