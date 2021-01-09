@@ -1,5 +1,28 @@
-//Remove duplicate element from sorted Linked List 
-Node prv=head;
+import java.util.*;
+class Node
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+	Node(){};
+}
+public class LinkedList 
+{
+	static Node head;
+	static void push(int data)
+	{
+		Node new_node = new Node();
+		new_node.data=data;
+		new_node.next=head;
+		head=new_node;
+	}
+	static void removeDuplicates()
+	{
+		Node prv=head;
 		while(prv!=null)
 		{
 			Node next=prv;
@@ -10,3 +33,26 @@ Node prv=head;
 			prv.next=next;
 			prv=prv.next;
 		}
+	}
+	static void print()
+	{
+		Node temp =head;
+		while(temp!=null)
+		{
+			System.out.print(temp.data+" ");
+			temp=temp.next;
+		}
+	}
+	public static void main(String[] args) 
+	{
+		push(2);
+		push(2);
+		push(2);
+		push(2);
+		push(2);
+		push(2);
+		push(2);
+		removeDuplicates();
+		print();
+	}
+}
