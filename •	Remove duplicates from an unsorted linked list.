@@ -1,0 +1,152 @@
+//Remove duplicates from an unsorted linked list.
+// This code is not perfect need to optimize it.
+import java.util.*;
+class Node
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+	Node(){};
+}
+public class LinkedList 
+{
+	static Node head;
+	static void push(int data)
+	{
+		Node new_node = new Node();
+		new_node.data=data;
+		new_node.next=head;
+		head=new_node;
+	}
+	public static Node remove_duplicates() 
+	{
+		Node curr=head;
+		Node start=null;
+		Node temp=null;
+		ArrayList<Integer> hs = new ArrayList<>();
+		while(curr!=null)
+		{
+			if(!hs.contains(curr.data))
+			{
+				hs.add(curr.data);
+				if(start==null)
+				{
+					start=curr;
+					temp=start;
+				}
+				else
+				{
+					temp.next=curr;
+					temp=temp.next;
+				}
+			}
+			curr=curr.next;
+		}
+		temp.next=null;
+		return start;
+	}
+	static void print(Node head)
+	{
+		Node temp =head;
+		while(temp!=null)
+		{
+			System.out.print(temp.data+" ");
+			temp=temp.next;
+		}
+	}
+	public static void main(String[] args) 
+	{
+		push(6);
+		push(6);
+		push(3);
+		push(9);
+		push(5);
+		push(5);
+		push(4);
+		push(3);
+		Node ans=remove_duplicates();
+		print(ans);
+		
+	}
+}
+//This is efficient manner to solve any problem
+import java.util.*;
+class Node
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+	Node(){};
+}
+public class LinkedList 
+{
+	static Node head;
+	static void push(int data)
+	{
+		Node new_node = new Node();
+		new_node.data=data;
+		new_node.next=head;
+		head=new_node;
+	}
+	public static Node remove_duplicates() 
+	{
+		Node curr=head;
+		Node start=null;
+		Node temp=null;
+		HashSet<Integer> hs = new HashSet<>();
+		while(curr!=null)
+		{
+			if(hs.contains(curr.data))
+			{
+				temp.next=curr.next;
+			}
+			else
+			{
+				hs.add(curr.data);
+				if(start==null)
+				{
+					start=curr;
+					temp=start;
+				}
+				else
+				{
+					temp.next=curr;
+					temp=temp.next;
+				}
+			}
+			curr=curr.next;
+		}
+		return start;
+	}
+	static void print(Node head)
+	{
+		Node temp =head;
+		while(temp!=null)
+		{
+			System.out.print(temp.data+" ");
+			temp=temp.next;
+		}
+	}
+	public static void main(String[] args) 
+	{
+		push(6);
+		push(6);
+		push(3);
+		push(9);
+		push(5);
+		push(5);
+		push(4);
+		push(3);
+		Node ans=remove_duplicates();
+		print(ans);
+		
+	}
+}
