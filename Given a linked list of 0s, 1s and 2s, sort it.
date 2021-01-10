@@ -1,0 +1,70 @@
+//Given a linked list of 0s, 1s and 2s, sort it.
+class Node
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+	Node(){};
+}
+public class LinkedList 
+{
+	static Node head;
+	static void push(int data)
+	{
+		Node new_node = new Node();
+		new_node.data=data;
+		new_node.next=head;
+		head=new_node;
+	}
+	static void sortList() 
+    { 
+		int count[] = {0,0,0};
+		Node ptr = head;
+		while(ptr!=null)
+		{
+			count[ptr.data]++;
+			ptr=ptr.next;
+		}
+		ptr=head;
+		int i=0;
+		while(ptr!=null)
+		{
+			if(count[i]==0)
+			{
+				i++;
+			}
+			else
+			{
+				ptr.data=i;
+				--count[i];
+				ptr=ptr.next;
+			}
+		}
+    }
+	static void print()
+	{
+		Node temp =head;
+		while(temp!=null)
+		{
+			System.out.print(temp.data+" ");
+			temp=temp.next;
+		}
+	}
+	public static void main(String[] args) 
+	{
+		push(0);
+		push(1);
+		push(0);
+		push(2);
+		push(1);
+		push(1);
+		push(2);
+		push(1);
+		sortList();
+		print();
+	}
+}
