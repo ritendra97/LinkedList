@@ -1,0 +1,47 @@
+//Count pairs from two linked lists whose sum is equal to a given value
+import java.util.*;
+class Node
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+	Node(){};
+}
+public class LinkedList 
+{
+	static int countPairs(Node head1, Node head2, int x)
+    {
+		int count=0;
+		HashSet<Integer> hs = new HashSet<>();
+		while(head1!=null)
+		{
+			hs.add(head1.data);
+			head1=head1.next;
+		}
+		while(head2!=null)
+		{
+			if(hs.contains(x-head2.data))
+				count++;
+			head2=head2.next;
+		}
+		return count;
+    }
+	public static void main(String[] args) 
+	{
+		Node head1 = new Node(3);
+		head1.next= new Node(1);
+		head1.next.next = new Node(5);
+		head1.next.next.next=new Node(7);
+		
+		Node head2 = new Node(8);
+		head2.next = new Node(2);
+		head2.next.next = new Node(5);
+		head2.next.next.next=new Node(3);
+		int x=10;
+		System.out.print(countPairs(head1, head2, x));
+	}
+}
