@@ -1,0 +1,64 @@
+//Delete Middle of Linked List
+class Node
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+	Node(){};
+}
+public class LinkedList 
+{
+	static Node head;
+	static void push(int data)
+	{
+		Node new_node = new Node();
+		new_node.data=data;
+		new_node.next=head;
+		head=new_node;
+	}
+	static Node deleteMid(Node head)
+    {
+        if (head == null)
+            return null;
+        if (head.next == null) {
+            return null;
+        }
+        Node slow_ptr = head;
+        Node fast_ptr = head;
+        Node prev = null;
+        while (fast_ptr != null && fast_ptr.next != null) 
+        {
+            fast_ptr = fast_ptr.next.next;
+            prev = slow_ptr;
+            slow_ptr = slow_ptr.next;
+        }
+        prev.next = slow_ptr.next;
+        return head;
+    }
+	static void print()
+	{
+		Node temp =head;
+		while(temp!=null)
+		{
+			System.out.print(temp.data+" ");
+			temp=temp.next;
+		}
+	}
+	public static void main(String[] args) 
+	{
+		push(0);
+		push(1);
+		push(0);
+		push(2);
+		push(1);
+		push(1);
+		push(2);
+		push(1);
+		deleteMid(head);
+		print();
+	}
+}
