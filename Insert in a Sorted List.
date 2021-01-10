@@ -1,0 +1,62 @@
+//Insert in a Sorted List.(In this question we have most important concept please look into current index value)
+import java.util.*;
+class Node
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+	Node(){};
+}
+public class LinkedList 
+{
+	static Node head;
+	static void push(int data)
+	{
+		Node new_node = new Node();
+		new_node.data=data;
+		new_node.next=head;
+		head=new_node;
+	}
+	static void sortedInsert(Node new_node) 
+    {
+		Node current; 
+	    if (head == null || head.data >= new_node.data) 
+	    { 
+            new_node.next = head; 
+            head = new_node; 
+        } 
+        else 
+        { 
+            current = head; 
+            while (current.next != null && current.next.data < new_node.data) 
+                current = current.next; 
+            new_node.next = current.next; 
+            current.next = new_node; 
+        } 
+    }
+	static void print()
+	{
+		Node temp =head;
+		while(temp!=null)
+		{
+			System.out.print(temp.data+" ");
+			temp=temp.next;
+		}
+	}
+	public static void main(String[] args) 
+	{
+		push(80);
+		push(69);
+		push(58);
+		push(47);
+		push(36);
+		push(25);
+		Node node = new Node(78);
+		sortedInsert(node);
+		print();
+	}
+}
