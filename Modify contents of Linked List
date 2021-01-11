@@ -1,0 +1,103 @@
+//Modify contents of Linked List
+import java.util.*;
+class Node
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this .next=null;
+	}
+}
+public class LinkedList 
+{
+	static Node second_half;
+	static void reverse()
+	{
+		Node prv=null;
+		Node next=null;
+		Node curr = second_half;
+		while(curr!=null)
+		{
+			next=curr.next;
+			curr.next=prv;
+			prv=curr;
+			curr=next;
+		}
+		second_half=prv;
+	}
+	static Node frontAndBackSplit( Node head)
+	{
+		Node slow_ptr=head;
+		Node middle=null;
+		Node fast_ptr=head;
+		Node prv_slow_ptr=null;
+		while(fast_ptr!=null && fast_ptr.next!=null)
+		{
+			fast_ptr=fast_ptr.next.next;
+			prv_slow_ptr=slow_ptr;
+			slow_ptr=slow_ptr.next;
+		}
+		if(fast_ptr!=null)
+		{
+			middle=slow_ptr;
+			slow_ptr=slow_ptr.next;
+		}
+		prv_slow_ptr.next=null;
+		second_half=slow_ptr;
+		reverse();
+		Node t=head;
+		Node sh=second_half;
+		Node start=null;
+		Node temp=null;
+		while(t!=null && sh!=null)
+		{
+			Node ans = new Node(t.data-sh.data);
+			if(start==null)
+			{
+				start=ans;
+				temp=start;
+			}
+			else
+			{
+				temp.next=ans;
+				temp=temp.next;
+			}
+			t=t.next;
+			sh=sh.next;
+		}
+		reverse();
+		if(middle!=null)
+		{
+			temp.next =middle;
+			middle.next=second_half;
+		}
+		else
+		{
+			temp.next=second_half;
+		}
+		return start;
+	}
+	static void print(Node head)
+	{
+		Node temp =head;
+		while(temp!=null)
+		{
+			System.out.print(temp.data+" ");
+			temp=temp.next;
+		}
+	}
+	public static void main(String[] args) 
+	{
+		Node head1 = new Node(10);
+		head1.next = new Node(4);
+		head1.next.next = new Node(5);
+		head1.next.next.next = new Node(3);
+		head1.next.next.next.next = new Node(6);
+		head1.next.next.next.next.next = new Node(7);
+		head1.next.next.next.next.next.next = new Node(10);
+		Node ans=frontAndBackSplit(head1);
+		print(ans);
+	}
+}
