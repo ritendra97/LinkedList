@@ -1,0 +1,100 @@
+//Sort a linked list that is sorted alternating ascending and descending orders?
+import java.util.*;
+class Node
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this .next=null;
+	}
+}
+public class LinkedList 
+{
+	static Node head1;
+	static Node sort() 
+	{
+		Node head =null;
+		Node Ahead = new Node(0);
+		Node Dhead = new Node(0);
+		splitlist(Ahead,Dhead);
+		Ahead=Ahead.next;
+		Dhead=Dhead.next;
+		Dhead=reverseList(Dhead);
+		head = mergeList(Ahead,Dhead);
+		return head;
+	}
+	static Node reverseList(Node Dhead) 
+    { 
+        Node current = Dhead; 
+        Node prev = null; 
+        Node next; 
+        while (current != null) { 
+            next = current.next; 
+            current.next = prev; 
+            prev = current; 
+            current = next; 
+        } 
+        Dhead = prev; 
+        return Dhead; 
+    }
+	static Node mergeList(Node head1,Node head2)
+	{
+		Node result=null;
+		if(head1==null)
+			return head2;
+		if(head2==null)
+			return head1;
+		if(head1.data<head2.data)
+		{
+			result=head1;
+			result.next = mergeList(head1.next,head2);
+		}
+		else
+		{
+			result = head2;
+			result.next= mergeList(head1,head2.next);
+		}
+		return result;
+	}
+	static  void splitlist(Node Ahead, Node Dhead)
+	{
+		Node first = Ahead;
+		Node second = Dhead;
+		Node curr=head1;
+		while(curr!=null)
+		{
+			first.next=curr;
+			first=first.next;
+			curr=curr.next;
+			if(curr!=null)
+			{
+				second.next=curr;
+				second = second.next;
+				curr=curr.next;
+			}
+		}
+		first.next=null;
+		second.next=null;
+	}
+	static void print(Node head)
+	{
+		Node temp =head;
+		while(temp!=null)
+		{
+			System.out.print(temp.data+" ");
+			temp=temp.next;
+		}
+	}
+	public static void main(String[] args) 
+	{
+		Node head1 = new Node(11);
+		head1.next = new Node(15);
+		head1.next.next = new Node(20);
+		head1.next.next.next = new Node(5);
+		head1.next.next.next.next = new Node(10);
+		Node ans=sort();
+		print(ans);
+	} 
+}
