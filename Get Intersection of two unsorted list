@@ -1,0 +1,88 @@
+//Get Intersection of two unsorted list
+import java.util.*;
+class Node
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+}
+public class LinkedList 
+{
+	public static Node getIntersectionNode(Node headA, Node headB)
+    {
+		Node start=null;
+		Node new_node = null;
+		HashMap<Integer,Integer> map = new HashMap<>();
+		while(headA!=null)
+		{
+			if(map.containsKey(headA.data))
+			{
+				map.put(headA.data, map.get(headA.data)+1);
+			}
+			else
+			{
+				map.put(headA.data, 1);
+			}
+			headA=headA.next;
+		}
+		while(headB!=null)
+		{
+			if(map.containsKey(headB.data))
+			{
+				map.put(headB.data, map.get(headB.data)+1);
+			}
+			else
+			{
+				map.put(headB.data, 1);
+			}
+			headB=headB.next;
+		}
+		for(Map.Entry<Integer,Integer> a : map.entrySet())
+		{  
+			if(a.getValue()>1)
+			{
+				Node ans = new Node(a.getKey());
+				if(start==null)
+				{
+					start=ans;
+					new_node=start;
+				}
+				else
+				{
+					new_node.next=ans;
+					new_node=new_node.next;
+				}
+			}
+		}
+		new_node.next=null;
+		return start;
+    }
+	static void print(Node head)
+	{
+		Node temp =head;
+		while(temp!=null)
+		{
+			System.out.print(temp.data+" ");
+			temp=temp.next;
+		}
+	}
+	public static void main(String[] args) 
+	{
+		Node head1 = new Node(3);
+		head1.next = new Node(6);
+		head1.next.next = new Node(10);
+		head1.next.next.next = new Node(15);
+		head1.next.next.next.next = new Node(30);
+		
+		Node head2 = new Node(10);
+		head2.next = new Node(15);
+		head2.next.next = new Node(30);
+		head2.next.next.next = head1.next.next.next;
+		Node ans = getIntersectionNode(head1, head2);
+		print(ans);
+	}
+}
