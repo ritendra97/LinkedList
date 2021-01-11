@@ -13,9 +13,9 @@ class Node
 public class LinkedList 
 {
 	static Node head1;
+	static Node head =null;
 	static Node sort() 
 	{
-		Node head =null;
 		Node Ahead = new Node(0);
 		Node Dhead = new Node(0);
 		splitlist(Ahead,Dhead);
@@ -89,11 +89,13 @@ public class LinkedList
 	}
 	public static void main(String[] args) 
 	{
-		Node head1 = new Node(11);
-		head1.next = new Node(15);
-		head1.next.next = new Node(20);
-		head1.next.next.next = new Node(5);
-		head1.next.next.next.next = new Node(10);
+		head1 = new Node(10);
+		head1.next = new Node(40);
+		head1.next.next = new Node(53);
+		head1.next.next.next = new Node(30);
+		head1.next.next.next.next = new Node(67);
+		head1.next.next.next.next.next = new Node(12);
+		head1.next.next.next.next.next.next = new Node(89);
 		Node ans=sort();
 		print(ans);
 	} 
