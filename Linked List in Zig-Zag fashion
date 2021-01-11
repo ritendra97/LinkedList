@@ -1,0 +1,62 @@
+//Linked List in Zig-Zag fashion
+class Node
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this .next=null;
+	}
+}
+public class LinkedList 
+{
+	static void zigZagList(Node head) 
+    {
+		Node current= head;
+		boolean flag=true;
+		int temp;
+		while(current!=null && current.next!=null)
+		{
+			if(flag)
+			{
+				if (current.data > current.next.data) { 
+                    temp = current.data; 
+                    current.data = current.next.data; 
+                    current.next.data = temp; 
+                }
+			}
+			else
+			{
+				if (current.data < current.next.data) 
+				{ 
+                    temp = current.data; 
+                    current.data = current.next.data; 
+                    current.next.data = temp; 
+                } 
+			}
+			current = current.next;
+			flag=!flag;
+		}
+    }
+	static void print(Node head)
+	{
+		Node temp =head;
+		while(temp!=null)
+		{
+			System.out.print(temp.data+" ");
+			temp=temp.next;
+		}
+	}
+	public static void main(String[] args) 
+	{
+		Node head1 = new Node(11);
+		head1.next = new Node(15);
+		head1.next.next = new Node(20);
+		head1.next.next.next = new Node(5);
+		head1.next.next.next.next = new Node(10);
+		zigZagList(head1);
+		print(head1);
+	}
+
+}
