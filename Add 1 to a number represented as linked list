@@ -1,0 +1,84 @@
+//Add 1 to a number represented as linked list 
+import java.util.*;
+class Node
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+}
+public class LinkedList 
+{
+	static Node head;
+	static Node temp;
+	static void reverse(Node node)
+	{
+		Node next=null;
+		Node prv=null;
+		Node curr = temp;
+		while(curr!=null)
+		{
+			next=curr.next;
+			curr.next=prv;
+			prv=curr;
+			curr=next;
+		}
+		temp = prv;
+	}
+	public static Node addOne(Node head) 
+    { 
+		temp = head;
+	    reverse(temp);
+	    Node dummy = new Node(0);
+	    Node dummy1= dummy;
+	    int carry =0;
+	    int i=1;
+	    Node res=null;
+	    Node ans=null;
+        while(temp!=null)
+        {
+        	int sum = i+temp.data+carry;
+        	carry = sum/10;
+        	sum = sum%10;
+        	res = new Node(sum);
+        	if(ans==null)
+        	{
+        		ans=res;
+        	}
+        	else
+        	{
+        		res.next=ans;
+        		ans = res;
+        	}
+        	temp=temp.next;
+        	i=0;
+        }
+        if(carry!=0)
+        {
+        	res = new Node(carry);
+        	res.next =ans;
+        	ans =res;
+        }
+        return ans;
+    }
+	static void print(Node head)
+	{
+		Node temp =head;
+		while(temp!=null)
+		{
+			System.out.print(temp.data+" ");
+			temp=temp.next;
+		}
+	}
+	public static void main(String[] args) 
+	{
+		head=new Node(9);
+		head.next = new Node(9);
+		head.next.next =new Node(9);
+		Node ans= addOne(head);
+		print(ans);
+	}
+}
