@@ -1,0 +1,60 @@
+//Remove the loop in the Linked List
+import java.util.*;
+class Node
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+}
+public class LinkedList 
+{
+	static void remove_loop(Node head)
+	{
+		Node slow = head;
+		Node fast = head;
+		while(slow!=null && fast!=null && fast.next!=null)
+		{
+			slow=slow.next;
+			fast=fast.next.next;
+			if(slow==fast)
+				break;
+		}
+		if(slow!=fast)
+		{
+			System.out.print("There is no loop");
+			return;
+		}
+		slow=head;
+		while(slow.next!=fast.next)
+		{
+			slow=slow.next;
+			fast=fast.next;
+		}
+		fast.next=null;
+	}
+	static void print(Node head)
+	{
+		Node temp =head;
+		while(temp!=null)
+		{
+			System.out.print(temp.data+" ");
+			temp=temp.next;
+		}
+	}
+	public static void main(String[] args) 
+	{
+		Node head1 = new Node(50);
+		head1.next = new Node(20);
+		head1.next.next = new Node(15);
+		head1.next.next.next = new Node(4);
+		head1.next.next.next.next = new Node(10);
+		
+		head1.next.next.next.next.next = head1.next.next;
+		remove_loop(head1);
+		print(head1);
+	}
+}
