@@ -1,0 +1,76 @@
+//Reverse a Linked List in groups of given size
+import java.util.*;
+class Node
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+}
+public class LinkedList 
+{
+	static Node head;
+	static Stack<Node> st = new Stack<>();
+	public static Node reverse(Node head, int k)
+    {
+		Stack<Node> mystack = new Stack<Node> ();  
+	    Node current = head;  
+	    Node prev = null;  
+	  
+	    while (current != null) 
+	    {  
+	        int count = 0;  
+	        while (current != null && count < k) 
+	        {  
+	            mystack.push(current);  
+	            current = current.next;  
+	            count++;  
+	        }  
+	        while (mystack.size() > 0)  
+	        {  
+	            if (prev == null) 
+	            {  
+	                prev = mystack.peek();  
+	                head = prev;  
+	                mystack.pop();  
+	            }  
+	            else
+	            {  
+	                prev.next = mystack.peek();  
+	                prev = prev.next;  
+	                mystack.pop();  
+	            }  
+	        }  
+	    }   
+	    prev.next = null;  
+	  
+	    return head; 
+    }
+	static void print(Node head)
+	{
+		Node temp =head;
+		while(temp!=null)
+		{
+			System.out.print(temp.data+" ");
+			temp=temp.next;
+		}
+	}
+	public static void main(String[] args) 
+	{
+		Node head1 = new Node(1);
+		head1.next = new Node(2);
+		head1.next.next = new Node(3);
+		head1.next.next.next = new Node(4);
+		head1.next.next.next.next = new Node(5);
+		head1.next.next.next.next.next = new Node(6);
+		head1.next.next.next.next.next.next = new Node(7);
+		head1.next.next.next.next.next.next.next = new Node(8);
+		head1.next.next.next.next.next.next.next.next = new Node(9);
+		Node ans =reverse(head1,3);
+		print(ans);
+	}
+}
+// Below is the efficient manner
