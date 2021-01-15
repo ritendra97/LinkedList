@@ -1,0 +1,68 @@
+//Swap kth Node from the end
+class Node
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+}
+public class LinkedList 
+{
+	static Node head;
+	static Node swapkthnode(Node head, int num, int K)
+    {
+		if(num<K)
+			return null;
+		if(2*K-1==num)
+			return null;
+		int count1=1;
+		Node temp1=head;
+		Node prv1=null;
+		while(temp1!=null && count1<K)
+		{
+			prv1=temp1;
+			temp1=temp1.next;
+			count1++;
+		}
+		int count2=1;
+		Node temp2=head;
+		Node prv2=null;
+		while(temp2!=null && count2<num-K+1)
+		{
+			prv2=temp2;
+			temp2=temp2.next;
+			count2++;
+		}
+		if(prv1!=null)
+		   prv1.next=temp2;
+		if(prv2!=null)
+		   prv2.next=temp1;
+		Node ans = temp1.next;
+		temp1.next =temp2.next;
+		temp2.next = ans;
+		if(K==1)
+			head=temp2;
+		return head;
+    }
+	static void print(Node node)
+	{
+		Node temp=node;
+		while(temp!=null)
+		{
+			System.out.print(temp.data+" ");
+			temp=temp.next;
+		}
+	}
+	public static void main(String[] args) 
+	{
+		head = new Node(1);
+		head.next = new Node(2);
+		head.next.next = new Node(3);
+		head.next.next.next = new Node(4);
+		Node ans = swapkthnode(head,4,2);
+		print(ans);
+	}
+}
