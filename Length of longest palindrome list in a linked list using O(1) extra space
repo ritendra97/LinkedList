@@ -1,0 +1,59 @@
+//Length of longest palindrome list in a linked list using O(1) extra space
+class Node
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+}
+public class LinkedList 
+{
+	static Node head;
+	static int countCommon(Node a, Node b) 
+	{
+		int count=0;
+		while(a!=null && b!=null)
+		{
+			if(a.data==b.data)
+			{
+				count++;
+			}
+			else 
+				break;
+			a=a.next;
+			b=b.next;
+		}
+		return count;
+	}
+	public static int maxPalindrome(Node head)
+    {
+		Node curr=head;
+	    Node prv=null;
+	    Node next=null;
+	    int result =0;
+	    while(curr!=null)
+	    {
+	    	next =curr.next;
+	    	curr.next = prv;
+	    	result = Math.max(result,2*countCommon(prv,next)+1);
+	    	result = Math.max(result,2*countCommon(curr,next));
+	    	prv=curr;
+	    	curr=next;
+	    }
+	    return result;
+    }
+	public static void main(String[] args) 
+	{
+		head = new Node(2);
+		head.next = new Node(3);
+		head.next.next = new Node(7);
+		head.next.next.next = new Node(3);
+		head.next.next.next.next = new Node(2);
+		head.next.next.next.next.next = new Node(12);
+		head.next.next.next.next.next.next = new Node(14);
+		System.out.print(maxPalindrome(head));
+	}
+}
