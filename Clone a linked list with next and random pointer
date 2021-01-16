@@ -1,0 +1,188 @@
+//Clone a linked list with next and random pointer
+This below solution is not efficient
+import java.util.*;
+class Node
+{
+	int data;
+	Node next;
+	Node random;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+		this.random=null;
+	}
+	Node(){};
+}
+class LinkedList 
+{
+	static Node head;
+	static void push(int data)
+	{
+		Node new_node = new Node();
+		new_node.data = data;
+		new_node.next =head;
+		head=new_node;
+	}
+	public LinkedList(Node head)
+	{
+		this.head=head;
+	}
+	static void print()
+	{
+		Node temp=head;
+		while(temp!=null)
+		{
+			Node random = temp.random;
+			int randomdata = (random!=null)?random.data:-1;
+			System.out.println("Data = " + temp.data+", Random data = "+randomdata);
+			temp=temp.next;
+		}
+	}
+	public LinkedList clone()
+	{
+		Node origicurr = this.head;
+		Node clonecurr = null;
+		HashMap<Node,Node> map = new HashMap<Node,Node>();
+		while(origicurr!=null)
+		{
+			clonecurr = new Node(origicurr.data);
+			map.put(origicurr, clonecurr);
+			origicurr=origicurr.next;
+		}
+		origicurr=this.head;
+		while(origicurr!=null)
+		{
+			clonecurr = map.get(origicurr);
+			clonecurr.next = map.get(origicurr.next);
+			clonecurr.random = map.get(origicurr.random);
+			origicurr=origicurr.next;
+		}
+		return new LinkedList(map.get(this.head));
+	}
+	public static void main(String[] args) 
+	{
+		LinkedList list = new LinkedList(new Node(5)); 
+        list.push(4); 
+        list.push(3); 
+        list.push(2); 
+        list.push(1); 
+ 
+        list.head.random = list.head.next.next; 
+        list.head.next.random = 
+            list.head.next.next.next; 
+        list.head.next.next.random = 
+            list.head.next.next.next.next; 
+        list.head.next.next.next.random = 
+            list.head.next.next.next.next.next; 
+        list.head.next.next.next.next.random = 
+            list.head.next; 
+ 
+        LinkedList clone = list.clone(); 
+  
+        System.out.println("Original linked list"); 
+        list.print(); 
+        System.out.println("\nCloned linked list"); 
+        clone.print();
+	}
+}
+// this below solution is efficient
+import java.util.*;
+class Node
+{
+	int data;
+	Node next;
+	Node random;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+		this.random=null;
+	}
+	Node(){};
+}
+public class LinkedList 
+{
+	static Node head;
+	static void push(int data)
+	{
+		Node new_node = new Node();
+		new_node.data = data;
+		new_node.next =head;
+		head=new_node;
+	}
+	static void print(Node head)
+	{
+		Node temp=head;
+		while(temp!=null)
+		{
+			Node random = temp.random;
+			int randomdata = (random!=null)?random.data:-1;
+			System.out.println("Data = " + temp.data+", Random data = "+randomdata);
+			temp=temp.next;
+		}
+	}
+	public static  Node clone(Node node)
+	{
+		if(node == null)
+			return node;
+	    Node first = node;
+	    Node next = null;
+	    while(node!= null)
+	    {
+	    	Node new_node = new Node(node.data);
+	    	next = node.next;
+	    	node.next=new_node;
+	    	new_node.next = next;
+	    	node = next;
+	    }
+	    node=first;
+	    while(node!=null)
+	    {
+	    	if(node.next!=null)
+	    	{
+	    		node.next.random = (node.random!=null)?node.random.next:node.random;
+	    	}
+	    	node = node.next!=null?node.next.next:node.next;
+	    }
+	    node = first;
+	    Node copy = node.next;
+	    Node tempcopy = copy;
+	    while(node!=null && copy!=null)
+	    {
+	    	node.next =node.next!=null?node.next.next:node.next;
+	    	copy.next =copy.next!=null?copy.next.next:copy.next;
+	    	node=node.next;
+	    	copy=copy.next;
+	    }
+	    return tempcopy;
+	}
+	public static void main(String[] args) 
+	{
+		Node start = new Node(1);  
+	    start.next = new Node(2);  
+	    start.next.next = new Node(3);  
+	    start.next.next.next = new Node(4);  
+	    start.next.next.next.next = new Node(5);  
+	  
+	    // 1's random points to 3  
+	    start.random = start.next.next;  
+	  
+	    // 2's random points to 1  
+	    start.next.random = start;  
+	  
+	    // 3's and 4's random points to 5  
+	    start.next.next.random = start.next.next.next.next;  
+	    start.next.next.next.random = start.next.next.next.next;  
+	  
+	    // 5's random points to 2  
+	    start.next.next.next.next.random = start.next;  
+	  
+	    System.out.println("Original list : ");  
+	    print(start);  
+	  
+	    System.out.println("Cloned list : ");  
+	    Node cloned_list = clone(start);  
+	    print(cloned_list);  
+	}
+}
