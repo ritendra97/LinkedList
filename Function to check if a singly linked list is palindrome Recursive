@@ -1,0 +1,44 @@
+//Function to check if a singly linked list is palindrome Recursive
+import java.util.*;
+class Node
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+}
+public class LinkedList 
+{
+	static Node head;
+	static Node left;
+	static boolean isPalindromeutil(Node right)
+	{
+		left = head;
+		if(right==null)
+			return true;
+		boolean isp = isPalindromeutil(right.next);
+		if(isp==false)
+			return false;
+		boolean isp1 = (right.data==left.data);
+		
+		left = left.next;
+		return isp1;
+	}
+	static boolean isPalindrome(Node head)
+	{
+		return isPalindromeutil(head);
+	}
+	public static void main(String[] args) 
+	{
+		head = new Node(1);
+		head.next = new Node(2);
+		head.next.next = new Node(3);
+		head.next.next.next = new Node(3);
+		head.next.next.next.next = new Node(2);
+		head.next.next.next.next.next = new Node(1);
+		System.out.print(isPalindrome(head));
+	}
+}
