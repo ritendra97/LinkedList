@@ -70,6 +70,7 @@ public class LinkedList
 		temp2=node2;
 		temp1=reverse(temp1);
 		temp2=reverse(temp2);
+		// Heare i have used || sign instead of && so that one condition continue to print.
 		while(temp1!=null || temp2!=null)
 		{
 			if(temp1!=null && temp2!=null && temp1.data<temp2.data)
