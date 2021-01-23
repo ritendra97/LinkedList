@@ -1,0 +1,125 @@
+//Subtract Two Numbers represented as Linked Lists
+import java.util.*;
+class Node
+{
+	int data;
+	Node next;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+}
+public class LinkedList 
+{
+	static Node head1;
+	static Node head2;
+	static Node head=null;
+	static Node reverse(Node node)
+	{
+		Node curr=node;
+		Node prev=null;
+		Node next=null;
+		while(curr!=null)
+		{
+			next=curr.next;
+			curr.next = prev;
+			prev=curr;
+			curr=next;
+		}
+		node=prev;
+		return node;
+	}
+	static Node getBiggerlist(Node node1,Node node2)
+	{
+		while(node1!=null)
+		{
+			if(node1.data>node2.data)
+				return head1;
+			else if(node1.data<node2.data)
+				return head2;
+			node1=node1.next;
+			node2=node2.next;
+		}
+		return head1;
+	}
+	static Node addSubtract(Node node1, Node node2)
+	{
+		int count1=0;
+		int count2=0;
+		int diff=0;
+		Node temp1 = node1;
+		Node temp2 = node2;
+		while(temp1!=null)
+		{
+			temp1=temp1.next;
+			count1++;
+		}
+		while(temp2!=null)
+		{
+			temp2=temp2.next;
+			count2++;
+		}
+		if(count1<count2 || (count1==count2 && node2 == getBiggerlist(node1,node2)))
+		{
+			Node t=node1;
+			node1=node2;
+			node2=t;
+		}
+		temp1=node1;
+		temp2=node2;
+		temp1=reverse(temp1);
+		temp2=reverse(temp2);
+		while(temp1!=null || temp2!=null)
+		{
+			if(temp1!=null && temp2!=null && temp1.data<temp2.data)
+			{
+				temp1.data = temp1.data+10;
+				temp1.next.data = temp1.next.data-1;
+			}
+			diff = (temp1!=null?temp1.data:0)-(temp2!=null?temp2.data:0);
+			Node ans=new Node(diff);
+			if(head==null)
+			{
+				head=ans;
+			}
+			else 
+			{
+				ans.next=head;
+				head=ans;
+			}
+			if(temp1!=null)
+			{
+				temp1=temp1.next;
+			}
+			if(temp2!=null)
+			{
+				temp2=temp2.next;
+			}
+		}
+		return head;
+	}
+	static void print(Node head)
+	{
+		Node temp = head;
+		while(temp!=null)
+		{
+			System.out.print(temp.data+" ");
+			temp=temp.next;
+		}
+	}
+	public static void main(String[] args) 
+	{
+		head1 = new Node(1);
+		head1.next = new Node(7);
+		head1.next.next = new Node(8);
+		head1.next.next.next = new Node(2);
+		head1.next.next.next.next = new Node(5);
+		
+		head2 = new Node(5);
+		head2.next = new Node(6);
+		head2.next.next = new Node(7);
+		Node head = addSubtract(head1,head2);
+		print(head);
+	}
+}
