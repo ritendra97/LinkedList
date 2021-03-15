@@ -1,4 +1,3 @@
-//Function to check if a singly linked list is palindrome Recursive
 import java.util.*;
 class Node
 {
@@ -22,10 +21,14 @@ public class LinkedList
 		boolean isp = isPalindromeutil(right.next);
 		if(isp==false)
 			return false;
-		boolean isp1 = (right.data==left.data);
-		
-		left = left.next;
-		return isp1;
+		else if(left.data!=right.data)
+			return false;
+		else
+		{
+			//yha per pta hoga last m jo data bchta h bo to ek hi hota h to usko pehle next krna hota h 1123211 i am talking about 3;
+			left = left.next;
+			return true;
+		}
 	}
 	static boolean isPalindrome(Node head)
 	{
