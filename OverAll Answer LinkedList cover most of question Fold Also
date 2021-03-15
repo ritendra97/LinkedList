@@ -1,0 +1,414 @@
+import java.util.*;
+class Node
+{
+	int data;
+	Node next;
+	public Object tail;
+	Node(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+	Node()
+	{};
+}
+public class LinkedList 
+{
+	static Node head;
+	static Node tail;
+	static int size;
+	public static void Advancepush(int d)
+	{
+		Node new_Node = new Node();
+		new_Node.data=d;
+		if(size==0)
+		{
+			head=tail=new_Node;
+			size++;
+		}
+		else
+		{
+			tail.next=new_Node;
+			tail= new_Node;
+			size++;
+		}
+	}
+	public static void addFirst(int val)
+	{
+		Node temp = new Node();
+		temp.data=val;
+		temp.next=head;
+		head=temp;
+		if(size==0)
+			tail=head;
+		size++;
+	}
+	public static void removeFirst()
+	{
+		if(size==0)
+		{
+			System.out.println("This lis is empty:");
+		}
+		else if(size==1)
+		{
+			head=tail=null;
+		}
+		else
+		{
+			head=head.next;
+			size--;
+		}
+	}
+	public static int get_First(int idx)
+	{
+		if(size==0)
+		{
+			System.out.println("The List is Empty: ");
+			return -1;
+		}
+		else
+		{
+			return head.data;
+		}
+	}
+	public static int get_Last(int idx)
+	{
+		if(size==0)
+		{
+			System.out.println("The List is Empty: ");
+			return -1;
+		}
+		else
+		{
+			return tail.data;
+		}
+	}
+	public static int get_At(int idx)
+	{
+		// here is a twist keep remember index always start from 0 if you are thinking that if u will pass
+		//2 and you will get 2nd index wala data than u r wrong u will 3rd index wala data so here at else if function
+		// i mentioned the same like if index is lesser than 0 or equals to the length of the list the answer would be invalid 
+		// argument
+		if(size==0)
+		{
+			System.out.println("The List is Empty: ");
+			return -1;
+		}
+		else if(idx<0 || idx==size)
+		{
+			System.out.println("Invalid argument:");
+			return -1;
+		}
+		else
+		{
+			Node temp =  head;
+			for(int i=0;i<idx;i++)
+			{
+				temp=temp.next;
+			}
+			return temp.data;
+		}
+	}
+	public static void addLast(int val)
+	{
+		Node new_node = new Node();
+		new_node.data=val;
+		tail.next=new_node;
+		size++;
+	}
+	public static void add_Atindex(int idx,int val)
+	{	
+		if(idx<0 || idx>size)
+		{
+			System.out.println("Invalid argument:");
+		}
+		else if(idx==0)
+		{
+			addFirst(val);
+		}
+		else if(idx==size)
+		{
+			addLast(val);
+		}
+		else
+		{
+			Node node =  new Node();
+			node.data=val;
+			
+			Node temp = head;
+			for(int i=0;i<idx-1;i++)
+			{
+				temp=temp.next;
+			}
+			
+			node.next=temp.next;
+			temp.next=node;
+		}
+	}
+	public static void remove_Last()
+	{
+		if(size==0)
+			System.out.println("This size is 0:");
+		else if(size==1)
+		{
+			head=tail=null;
+			size=0;
+		}
+		else
+		{
+			Node temp = head;
+			for(int i=0;i<size-1;i++)
+			{
+				temp=temp.next;
+			}
+			temp.next=null;
+			tail=temp;
+			size--;
+		}
+	}
+	private static Node get_NodeAt(int idx)
+	{
+		Node temp=head;
+		for(int i=0;i<idx;i++)
+		{
+			temp=temp.next;
+		}
+		return temp;
+	}
+	public static Node Base_data_reverse()
+	{
+		int li= 0;
+		int ri= size-1;
+		while(li<ri)
+		{
+			Node left_node = get_NodeAt(li);
+			Node right_node = get_NodeAt(ri);
+			int t = left_node.data;
+			left_node.data = right_node.data;
+			right_node.data = t;
+			li++;
+			ri--;
+		}
+		return head;
+	}
+	public static Node Base_Pointer_reverse()
+	{
+		if(size==0)
+		{
+			System.out.println("The list is already in empty state:");
+		}
+		else if(size==1)
+		{
+			head=tail;
+		}
+		else
+		{
+			Node curr=head;
+			Node prev=null;
+			Node next=null;
+			while(curr!=null)
+			{
+				next=curr.next;
+				curr.next=prev;
+				prev=curr;
+				curr=next;
+			}
+			// you have to manage 
+			Node temp = head;
+			head=tail;
+			tail=temp;
+		}
+		return head;
+	}
+	// find kth element from last without using size of linked list use only iterative method
+	public static int kthelementfromlast(int k)
+	{
+		Node f=head;
+		Node s=head;
+		for(int i=0;i<k;i++)
+		{
+			f=f.next;
+		}
+		
+		while(f!=tail)
+		{
+			s=s.next;
+			f=f.next;
+		}
+		return s.data;
+	}
+	public static void kreverse(int k,Node head)
+	{
+		Node temp = head;
+		LinkedList prev=null;
+		while(temp!=null)
+		{
+			LinkedList curr = new LinkedList();
+			if(size>=k)
+			{
+				for(int i=0;i<k;i++)
+				{
+					int val = temp.data;
+					curr.addFirst(val);
+					temp = temp.next;
+					size--;
+				}
+			}
+			else
+			{
+				while(temp!=null)
+				{
+					int val = temp.data;
+					curr.addLast(val);
+					temp=temp.next;
+					size--;
+				}
+			}
+			if(prev==null)
+			{
+				prev=curr;
+			}
+			else
+			{
+				prev.tail.next=curr.head;
+				prev.tail = curr.tail;
+				curr.size+=prev.size;
+			}
+		}
+	}
+	public static Node reverseRecursion(Node node)
+	{
+		if(node==null)
+			return node;
+		
+		if(node.next == null) { 
+            return node; 
+        } 
+		Node newhead = reverseRecursion(node.next);
+		if(node==tail)
+		{
+			
+		}
+		else
+		{
+			node.next.next=node;
+		}
+		
+		node.next=null;
+		Node temp = head;
+		head=tail;
+		tail = temp;
+		
+		return newhead;
+	}
+	static Node rleft;
+	public static void reversrecursiondatahelper(Node node,int floor)
+	{
+		if(node==null)
+			return;
+		reversrecursiondatahelper(node.next,floor+1);
+		if(floor>size/2)
+		{
+			int temp = rleft.data;
+			rleft.data=node.data;
+			node.data=temp;
+			rleft = rleft.next;
+		}
+	}
+	public static void reversrecursiondata(Node node)
+	{
+		rleft=head;
+		reversrecursiondatahelper(node,0);
+	}
+	static Node fleft;
+	public static void foldhelper(Node node,int floor)
+	{
+		if(node==null)
+			return;
+		foldhelper(node.next,floor+1);
+		if(floor>size/2)
+		{
+			Node temp = fleft.next;
+			fleft.next=node;
+			node.next=temp;
+			fleft=temp;
+		}
+		else if(floor==size/2)
+		{
+			// if u don't have tail use below
+			node.next=null;
+			// else use below
+			//tail=node;
+			//tail.next=null;
+		}
+	}
+	public static void fold(Node node)
+	{
+		fleft=head;
+		foldhelper(node,0);
+	}
+	public static LinkedList mergetwolinkedlist(Node n1, Node n2)
+	{
+		Node a = n1;
+		Node b = n2;
+		
+		LinkedList res = new LinkedList();
+		
+		while(a!=null && b!=null)
+		{
+			if(a.data<b.data)
+			{
+				res.addLast(a.data);
+				a=a.next;
+			}
+			else
+			{
+				res.addLast(b.data);
+				b=b.next;
+			}
+			a=a.next;
+			b=b.next;
+		}
+		while(a!=null)
+		{
+			res.addLast(a.data);
+			a=a.next;
+		}
+		while(b!=null)
+		{
+			res.addLast(b.data);
+			b=b.next;
+		}
+		return res;
+		
+	}
+	public static void print_List()
+	{
+		Node t = head;
+		while(t!=null)
+		{
+			System.out.println(t.data);
+			t=t.next;
+		}
+	}
+	public static void main(String[] args) 
+	{
+		Advancepush(1);
+		Advancepush(2);
+		Advancepush(3);
+		Advancepush(4);
+		Advancepush(5);
+		//System.out.println(get_At(4));
+		//addFirst(7);
+//		print_List();
+//		Base_Pointer_reverse();
+//		print_List();
+		//System.out.println(kthelementfromlast(0));
+		//kreverse(3,head);
+		//Node ans=reverseRecursion(head);
+		fold(head);
+		print_List();
+		//System.out.println("Ths size of the list is: "+size);
+		
+	}
+}
