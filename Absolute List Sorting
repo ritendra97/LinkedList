@@ -1,4 +1,65 @@
 //Absolute List Sorting
+// mwerge in O(n) Time Complexity
+import java.util.*;
+class ListNode 
+{
+    int val;
+    ListNode next;
+    public ListNode(int val) 
+    {
+        this.val = val;
+        this.next = null;
+    }
+}
+public class LinkedList 
+{
+	public static ListNode Absolute(ListNode start)
+	{
+		
+		ListNode curr = start;
+		ListNode temp = start;
+		ListNode prev = start;
+		if(start.val<0)
+		{
+			curr=curr.next;
+		}
+		while(curr!=null)
+		{
+			if(curr.val<0)
+			{
+				prev.next = curr.next;
+				curr.next = temp;
+				temp = curr;
+				start = temp;
+				curr = prev;
+			}
+			prev=curr;
+			if(curr!=null)
+			   curr=curr.next;
+		}
+		return start;
+	}
+	static void print(ListNode head)
+	{
+		ListNode temp =head;
+		while(temp!=null)
+		{
+			System.out.print(temp.val+" ");
+			temp=temp.next;
+		}
+	}
+	public static void main(String[] args) 
+	{
+		ListNode start = new ListNode(1); 
+	    start.next = new ListNode(-10); 
+	    start.next.next = new ListNode(-3); 
+	    start.next.next.next = new ListNode(-4); 
+	    start.next.next.next.next = new ListNode(-5); 
+	    
+        ListNode ans = Absolute(start);
+	    print(ans); 
+	}
+}
 import java.util.*;
 class Node
 {
