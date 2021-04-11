@@ -1,0 +1,63 @@
+//Remove duplicates in s linked List 2
+class ListNode
+{
+	int val;
+	ListNode next ;
+	ListNode (int d)
+	{
+		this.val = d;
+		this.next = null;
+	}
+}
+public class LInkedList 
+{
+	public static ListNode deleteDuplicates(ListNode head)
+    {
+		ListNode sentinel = new ListNode(0);
+		
+		sentinel.next = head;
+		
+		ListNode predecessor = sentinel;
+		while(head!=null)
+		{
+			if(head.next != null && head.val == head.next.val)
+			{
+				while(head.next!=null && head.val==head.next.val)
+				{
+					head=head.next;
+				}
+				predecessor.next = head.next; 
+			}
+			else
+			{
+				predecessor = predecessor.next;
+			}
+			head=head.next;
+		}
+		
+		return sentinel.next;
+    }
+	static void print(ListNode head)
+	{
+		ListNode temp =head;
+		while(temp!=null)
+		{
+			System.out.print(temp.val+" ");
+			temp=temp.next;
+		}
+	}
+	public static void main(String[] args) 
+	{
+		ListNode head = new ListNode(1);
+		head.next = new ListNode(2);
+		head.next.next = new ListNode(3);
+		head.next.next.next = new ListNode(3);
+		head.next.next.next.next = new ListNode(4);
+		head.next.next.next.next.next = new ListNode(4);
+		head.next.next.next.next.next.next = new ListNode(5);
+		
+		ListNode ans  = deleteDuplicates(head);
+		print(ans);
+	}
+
+}
