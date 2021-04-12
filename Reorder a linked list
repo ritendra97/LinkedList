@@ -1,0 +1,132 @@
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.*;
+
+class ListNode
+{
+	int data;
+	ListNode next;
+
+	ListNode(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+}
+public class LinkedLIstProblem 
+{
+    public static ListNode reorderList(ListNode head) {
+         Deque<ListNode> dq = new LinkedList<ListNode>();
+         
+         ListNode newhead = null;
+         ListNode temp = head;
+ 
+         while(temp!=null)
+         {
+        	 dq.add(temp);
+        	 temp = temp.next;
+         }
+         
+         while(!dq.isEmpty())
+         {
+        	 ListNode first = dq.peekFirst();
+        	 ListNode second = dq.peekLast();
+        	 
+        	 dq.removeFirst();
+        	 if(!dq.isEmpty())
+        	 {
+        		 dq.removeLast();
+        	 }
+        	 if(newhead==null)
+        	 {
+        		 newhead = first;
+        	 }
+        	 first.next = second;
+        	 second.next = dq.isEmpty()?null : dq.peekFirst();
+         }
+         return newhead;
+    }
+    static void print(ListNode head){
+		ListNode temp =head;
+		while(temp!=null)
+		{
+			System.out.print(temp.data+" ");
+			temp=temp.next;
+		}
+	}
+	public static void main(String[] args) 
+	{
+		ListNode head1 = new ListNode(1);
+		head1.next = new ListNode(2);
+		head1.next.next = new ListNode(3);
+		head1.next.next.next = new ListNode(4);
+		head1.next.next.next.next = new ListNode(5);
+		head1.next.next.next.next.next = new ListNode(6);
+		head1.next.next.next.next.next.next = new ListNode(7);
+		ListNode ans = reorderList(head1);
+		
+		print(ans);
+	}
+}
+// In O(1) space Complexity
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public static ListNode reverse(ListNode head)
+	{
+		ListNode curr = head;
+		ListNode next = null;
+		ListNode prev = null;
+		while(curr!=null)
+		{
+			next = curr.next;
+			curr.next = prev;
+			prev = curr;
+			curr=next;
+		}
+		return prev;
+	}
+    public void reorderList(ListNode head) {
+        if(head==null || head.next==null)
+            return ;
+         ListNode prev = null;
+    	ListNode fast = head;
+    	ListNode slow = head;
+    	ListNode curr = head;
+    	
+    	while(fast!=null && fast.next!=null)
+    	{
+    		prev = slow;
+    		slow = slow.next;
+    		fast = fast.next.next;
+    	}
+    	
+    	prev.next =null;
+    	
+    	ListNode reversed = reverse(slow);
+    	ListNode next = reversed;
+    	
+    	while(curr!=null)
+    	{
+    		ListNode temp = curr.next;
+    		curr.next = next;
+    		next =temp;
+    		
+    		if(curr.next==null)
+    		{
+    			curr.next =next;
+    			break;
+    		}
+    		
+    		curr=curr.next;
+    	}
+    }
+}
