@@ -1,4 +1,105 @@
 //Flattening a linked list
+O(1) space 
+import java.util.*;
+class Node
+{
+	int data;
+	Node right;
+	Node down;
+	Node(int data)
+	{
+		this.data=data;
+		this.right=null;
+		this.down=null;
+	}
+}
+class pair
+{
+	int val;
+	Node head;
+	pair(Node head,int val)
+	{
+		this.head=head;
+		this.val=val;
+	}
+}
+public class Flatteningalinkedlist 
+{
+	public static Node merger(Node a,Node b)
+	{
+		Node dummy = new Node(0);
+		Node temp = dummy;
+		while(a!=null && b!=null)
+		{
+			if(a.data<b.data)
+			{
+				temp.down = a;
+				a=a.down;
+		    }
+			else
+			{
+				temp.down = b;
+				b=b.down;
+			}
+			temp=temp.down;
+		}
+		if(a!=null)
+			temp.down = a;
+		else
+			temp.down = b;
+		return dummy.down;
+	}
+	public static Node flatten(Node root)
+	{
+		if(root==null || root.down==null)
+			return root;
+		
+		root.right = flatten(root.right);
+		
+	    root = merger(root,root.right);
+	    
+	    return root;
+	}
+	public static Node push(Node head_ref, int data)
+    {
+       Node new_node = new Node(data);
+       new_node.down = head_ref;
+       head_ref = new_node;
+       return head_ref;
+    }
+	public static void printList(Node h)
+    {
+        while (h != null) {
+            System.out.print(h.data + " ");
+            h = h.down;
+        }
+    }
+	public static void main(String[] args) 
+	{
+		Node head = null;
+		 
+        head = push(head, 30);
+        head = push(head, 8);
+        head = push(head, 7);
+        head = push(head, 5);
+ 
+        head.right = push(head.right, 20);
+        head.right = push(head.right, 10);
+ 
+        head.right.right = push(head.right.right, 50);
+        head.right.right = push(head.right.right, 22);
+        head.right.right = push(head.right.right, 19);
+ 
+        head.right.right.right = push(head.right.right.right, 45);
+        head.right.right.right = push(head.right.right.right, 40);
+        head.right.right.right = push(head.right.right.right, 35);
+        head.right.right.right = push(head.right.right.right, 20);
+        
+        head = flatten(head);
+        printList(head);
+	}
+}
+
 import java.util.*;
 class Node
 {
