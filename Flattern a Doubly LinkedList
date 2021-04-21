@@ -1,0 +1,88 @@
+import java.util.*;
+class Node {
+    int value;
+    Node prev;
+    Node next;
+    Node child;
+
+    public Node() {}
+
+    public Node(int value, Node previous, Node next, Node child) {
+        this.value = value;
+        this.prev = previous;
+        this.next = next;
+        this.child = child;
+    }
+}   
+public class LinkedListProblem {
+	
+	public static Node flatternLinkedList(Node head) {
+		
+		Stack<Node> st = new Stack<Node>();
+		
+		Node curr = head;
+		Node tail = head;
+		while(curr!=null) {
+			
+			if(curr.child!=null) {
+				Node child = curr.child;
+				
+				if(curr.next!=null) {
+					
+					st.push(curr.next);
+					curr.next.prev=null;
+				}
+				curr.next=child;
+				child.prev=curr;
+				curr.child=null;
+			}
+			tail = curr;
+			curr=curr.next;
+		}
+		while(!st.isEmpty()) {
+			curr = st.pop();
+			tail.next = curr;
+			curr.prev = tail;
+			while(curr!=null) {
+				tail=curr;
+				curr=curr.next;
+			}
+		}
+		return head;
+	}
+	public static void main(String[] args) {
+	
+		Node head = null;
+        
+        Node node1 = new Node();
+        node1.value = 1;        
+        Node node2 = new Node();
+        node2.value = 2;        
+        Node node3 = new Node();
+        node3.value = 3;
+         
+        head = node1;
+        node1.next = node2;
+        node2.prev = node1;
+        node2.next = node3;
+        node3.prev = node2;
+         
+        Node node4 = new Node();
+        node4.value = 4;        
+        Node node5 = new Node();
+        node5.value = 5;
+         
+        node1.child = node4;
+        node4.next = node5;
+        node5.prev = node4;
+        
+        
+       Node listNode = flatternLinkedList(head);
+       
+       while(listNode != null) {
+           System.out.print(listNode.value + ", ");
+           listNode = listNode.next;
+       }
+	}
+
+}
