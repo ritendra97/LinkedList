@@ -1,67 +1,169 @@
 //Intersection of two Sorted Linked Lists
-package intersectionofsortedlist;
 
-public class LinkedList 
-{
-	static class Node
-	{
-		int data;
-		Node next;
-		Node(int data, Node next) {
-	        this.data = data;
-	        this.next = next;}
+Time Complexity O(Max(n1,n2))
+Space Complexity O(max(n1,n2))\
+
+Doubt -> whether Time Complexity is O(m+n)
+
+import java.util.HashSet;
+
+class ListNode {
+	int val;
+	ListNode next;
+
+	ListNode(int d) {
+		this.val = d;
+		this.next = null;
 	}
-	static Node intersection(Node node1,Node node2)
-	{
-		Node head = null, tail = null;
-		while(node1!=null && node2!=null)
-		{
-			
-			if(node1.data==node2.data)
+}
+
+public class LinkedList {
+
+	public static ListNode intersection(ListNode node1, ListNode node2) {
+		 
+		HashSet<Integer> hs = new HashSet<Integer>();
+		
+		ListNode n1 = node1;
+		
+		while(n1!=null) {
+			hs.add(n1.val);
+			n1 = n1.next;
+		}
+		
+		ListNode n2= node2;
+		ListNode newhead = null;
+		ListNode temp = null;
+		
+		while(n2!=null) {
+			if(hs.contains(n2.val))
 			{
-				 if (head == null) {
-	                    tail = head = new Node(node1.data, head);
-	                }
-	                else {
-	                    tail = tail.next = new Node(node1.data, tail.next);
-	                }
-				node1=node1.next;
-				node2=node2.next;
+				if(newhead==null) {
+					newhead = n2;
+					temp = newhead;
+				}else {
+					temp.next = n2;
+					temp = temp.next;
+				}
 			}
-			else if(node1.data<node2.data)
-			{
-				node1=node1.next;
-			}
-			else
-			{
-				node2=node2.next;
+			n2 = n2.next;
+		}
+		
+		return newhead;
+	}
+
+	static void print(ListNode head) {
+		ListNode temp = head;
+		while (temp != null) {
+			System.out.print(temp.val + " ");
+			temp = temp.next;
+		}
+	}
+
+	public static void main(String[] args) {
+
+		ListNode head1 = new ListNode(1);
+		head1.next = new ListNode(2);
+		head1.next.next = new ListNode(3);
+		head1.next.next.next = new ListNode(4);
+		head1.next.next.next.next = new ListNode(6);
+
+		head1.next.next.next.next.next = new ListNode(10);
+
+
+		ListNode head2 = new ListNode(2);
+		head2.next = new ListNode(4);
+		head2.next.next = new ListNode(6);
+		head2.next.next.next = new ListNode(8);
+
+		head2.next.next.next.next = new ListNode(12);
+		head2.next.next.next.next.next = new ListNode(10);
+
+		
+		ListNode ans = intersection(head1,head2);
+
+		print(ans);
+	}
+}
+
+
+
+Complexity Analysis: 
+
+Time Complexity: O(m+n) where m and n are number of nodes in first and second linked lists respectively. 
+Only one traversal of the lists are needed.
+Auxiliary Space: O(max(m, n)). 
+The output list can store at most m+n nodes.
+
+import java.util.HashSet;
+
+class ListNode {
+	int val;
+	ListNode next;
+
+	ListNode(int d) {
+		this.val = d;
+		this.next = null;
+	}
+
+	ListNode(int val, ListNode next) {
+		super();
+		this.val = val;
+		this.next = next;
+	}
+
+}
+
+public class LinkedList {
+
+	public static ListNode intersection(ListNode node1, ListNode node2) {
+
+		ListNode head = null, tail = null;
+		while (node1 != null && node2 != null) {
+
+			if (node1.val == node2.val) {
+				if (head == null) {
+					tail = head = new ListNode(node1.val, head);
+				} else {
+					tail = tail.next = new ListNode(node1.val, tail.next);
+				}
+				node1 = node1.next;
+				node2 = node2.next;
+			} else if (node1.val < node2.val) {
+				node1 = node1.next;
+			} else {
+				node2 = node2.next;
 			}
 		}
 		return head;
 	}
-	static void display(Node node)
-	{
-		while(node!=null)
-		{
-			System.out.println(node.data);
-			node=node.next;
+
+	static void print(ListNode head) {
+		ListNode temp = head;
+		while (temp != null) {
+			System.out.print(temp.val + " ");
+			temp = temp.next;
 		}
 	}
-	public static void main(String[] args) 
-	{
-		int[] keys = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-		 
-        Node a = null;
-        for (int i = keys.length - 1; i >= 0; i = i - 3) {
-            a = new Node(keys[i], a);
-        }
-        display(a);
-        Node b = null;
-        for (int i = keys.length - 1; i >= 0; i = i - 2) {
-            b = new Node(keys[i], b);
-        }
-		Node head=intersection(a,b);
-		//display(head);
-		
+
+	public static void main(String[] args) {
+
+		ListNode head1 = new ListNode(1);
+		head1.next = new ListNode(2);
+		head1.next.next = new ListNode(3);
+		head1.next.next.next = new ListNode(4);
+		head1.next.next.next.next = new ListNode(6);
+		head1.next.next.next.next.next = new ListNode(10);
+
+		ListNode head2 = new ListNode(2);
+		head2.next = new ListNode(4);
+		head2.next.next = new ListNode(6);
+		head2.next.next.next = new ListNode(8);
+		head2.next.next.next.next = new ListNode(10);
+		head2.next.next.next.next.next = new ListNode(12);
+		head2.next.next.next.next.next.next = new ListNode(10);
+
+		ListNode ans = intersection(head1, head2);
+
+		print(ans);
 	}
 }
