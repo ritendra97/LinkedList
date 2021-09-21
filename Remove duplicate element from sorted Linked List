@@ -1,3 +1,29 @@
+Time Complexity
+
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) 
+    {
+        if(head==null)
+            return null;
+        ListNode prev=head;
+        ListNode next = head.next;
+        while(next!=null)
+        {
+            if(prev.val==next.val)
+            {
+                prev.next = next.next;
+                next=next.next;
+            }
+            else
+            {
+                prev=prev.next;
+                next=next.next;
+            }
+        }
+        return head;
+    }
+}
+
 import java.util.*;
 class Node
 {
