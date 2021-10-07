@@ -1,0 +1,91 @@
+//Circular Single LinkedList
+import java.util.HashSet;
+
+class ListNode {
+	int val;
+	ListNode next;
+
+	ListNode(int d) {
+		this.val = d;
+		this.next = null;
+	}
+
+	ListNode(int val, ListNode next) {
+		super();
+		this.val = val;
+		this.next = next;
+	}
+
+}
+
+// circular linkdlist insertion 
+public class LinkedList {
+
+	static ListNode head;
+
+	public static void push(int data) {
+
+		ListNode new_Node = new ListNode(data);
+
+		if (head == null) {
+
+			head = new_Node;
+			new_Node.next = new_Node;
+
+		} else {
+			ListNode temp = head;
+			while (temp.next != head) {
+				temp = temp.next;
+			}
+			new_Node.next = head;
+			temp.next = new_Node;
+		}
+
+	}
+
+	public static void Delete() {
+		if(head==null)
+			return;
+		else if(head.next==null){
+			head=null;
+			return;
+		}else {
+			ListNode ptr = head;
+			while(ptr.next!=head) {
+				ptr=ptr.next;
+			}
+			ptr.next = head.next;
+			head = ptr.next;
+		}
+		
+	}
+	public static void Display(ListNode head) {
+		ListNode temp = head;
+
+		while (temp.next != head) {
+			System.out.print(temp.val+" ");
+			temp = temp.next;
+		}
+	}
+
+	public static void main(String[] args) {
+		push(1);
+		push(2);
+		push(3);
+		push(4);
+		push(5);
+		push(6);
+		push(7);
+		push(8);
+		push(8);
+		push(9);
+		push(10);
+		push(11);
+		push(12);
+		push(13);
+		Display(head);
+		Delete();
+		System.out.println();
+		Display(head);
+	}
+}
